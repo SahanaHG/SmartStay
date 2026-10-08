@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SmartStay – Luxury Hotel & Reservation System</title>
+  <meta name="description" content="Experience 5-star comfort and seamless reservations with SmartStay. Smart room search, dynamic pricing, instant simulated payments and live bookings.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <header class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#" class="brand-logo" id="brand-logo">
+        <span class="logo-icon">✦</span>
+        <div class="brand-text">
+          <span class="brand-name">SmartStay</span>
+          <span class="brand-tag">LUXURY HOTEL & RESIDENCE</span>
+        </div>
+      </a>
+
+      <nav class="nav-menu" id="nav-menu">
+        <a href="#hero-section" class="nav-link active" id="nav-home">Home</a>
+        <a href="#welcome-dashboard" class="nav-link" id="nav-welcome">Welcome Dashboard</a>
+        <a href="#rooms-section" class="nav-link" id="nav-rooms">Rooms & Suites</a>
+        <a href="#search-section" class="nav-link" id="nav-search">Smart Search</a>
+        <a href="#bookings-section" class="nav-link" id="nav-bookings">My Bookings</a>
+        <a href="#stats-section" class="nav-link" id="nav-stats">Live Analytics</a>
+        <a href="#admin-section" class="nav-link" id="nav-admin">Admin</a>
+      </nav>
+
+      <div class="nav-actions">
+        <div class="engine-status" id="engine-status" title="System Status">
+          <span class="status-dot"></span>
+          <span class="status-label" id="status-label">Online</span>
+        </div>
+        <button class="btn btn-primary" id="btn-quick-book" onclick="scrollToSection('search-section')">Book A Stay</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero-section" id="hero-section">
+      <div class="hero-backdrop">
+        <img src="assets/hero.jpg" alt="SmartStay Luxury Hotel Exterior" class="hero-img" id="hero-img">
+        <div class="hero-overlay"></div>
+      </div>
+
+      <div class="hero-content">
+        <div class="hero-badge animate-fade">
+          <span class="star-icon">★ ★ ★ ★ ★</span>
+          <span>PREMIUM 5-STAR HOSPITALITY</span>
+        </div>
+        <h1 class="hero-title animate-slide-up">
+          Refined Luxury, <br><span class="text-gold">Effortless Stays</span>
+        </h1>
+        <p class="hero-subtitle animate-slide-up">
+          Immerse yourself in bespoke comfort. Powered by SmartStay’s intelligent room matching, dynamic pricing, and automated reservation management.
+        </p>
+
+        <!-- Quick Search Floating Bar -->
+        <div class="hero-search-card" id="hero-search-card">
+          <div class="search-field">
+            <label for="hero-checkin">Check-in</label>
+            <input type="date" id="hero-checkin" class="input-control">
+          </div>
+          <div class="search-field">
+            <label for="hero-checkout">Check-out</label>
+            <input type="date" id="hero-checkout" class="input-control">
+          </div>
+          <div class="search-field">
+            <label for="hero-type">Room Type</label>
+            <select id="hero-type" class="input-control">
+              <option value="ALL">All Categories</option>
+              <option value="Standard">Standard (₹2,000)</option>
+              <option value="Deluxe">Deluxe (₹3,500)</option>
+              <option value="Suite">Suite (₹5,000)</option>
+            </select>
+          </div>
+          <div class="search-field">
+            <label for="hero-guests">Guests</label>
+            <select id="hero-guests" class="input-control">
+              <option value="1">1 Guest</option>
+              <option value="2" selected>2 Guests</option>
+              <option value="3">3 Guests</option>
+              <option value="4">4 Guests</option>
+            </select>
+          </div>
+          <div class="search-btn-field">
+            <button class="btn btn-primary btn-search-hero" id="hero-search-btn" onclick="applyHeroSearch()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              Search
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Welcome Dashboard Section -->
+    <section class="welcome-dashboard-section" id="welcome-dashboard">
+      <div class="container">
+        <div class="welcome-banner-card">
+          <div class="welcome-header-content">
+            <div class="welcome-top-row">
+              <div class="welcome-greeting-badge">
+                <span class="live-pulse"></span>
+                <span id="welcome-time-greeting">WELCOME TO SMARTSTAY</span>
+              </div>
+              <div class="welcome-clock-box" id="welcome-clock-box">
+                <span class="clock-icon">🕒</span>
+                <span id="welcome-live-clock">Loading live time...</span>
+              </div>
+            </div>
+
+            <h2 class="welcome-title">Executive Hotel Reception Dashboard</h2>
+            <p class="welcome-desc">Live operational control center: real-time room availability, quick guest booking actions, and revenue tracking.</p>
+          </div>
+
+          <!-- Quick KPI Cards -->
+          <div class="welcome-stats-row">
+            <div class="welcome-stat-box">
+              <div class="ws-icon">🏨</div>
+              <div class="ws-content">
+                <span class="ws-label">Available Rooms</span>
+                <strong class="ws-val text-success" id="wd-avail-rooms">20 / 20</strong>
+                <span class="ws-sub">Ready for check-in</span>
+              </div>
+            </div>
+            <div class="welcome-stat-box">
+              <div class="ws-icon">🛎️</div>
+              <div class="ws-content">
+                <span class="ws-label">Active Bookings</span>
+                <strong class="ws-val text-gold" id="wd-active-bookings">0</strong>
+                <span class="ws-sub">Confirmed reservations</span>
+              </div>
+            </div>
+            <div class="welcome-stat-box">
+              <div class="ws-icon">💰</div>
+              <div class="ws-content">
+                <span class="ws-label">Live Revenue</span>
+                <strong class="ws-val text-gold" id="wd-total-revenue">₹0</strong>
+                <span class="ws-sub">Collected to date</span>
+              </div>
+            </div>
+            <div class="welcome-stat-box">
+              <div class="ws-icon">📊</div>
+              <div class="ws-content">
+                <span class="ws-label">Occupancy Rate</span>
+                <strong class="ws-val text-info" id="wd-occupancy-rate">0%</strong>
+                <span class="ws-sub">Capacity utilization</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Actions Hub -->
+          <div class="welcome-quick-actions">
+            <h4 class="quick-actions-title">⚡ Quick Management Shortcuts</h4>
+            <div class="quick-actions-grid">
+              <button class="qa-btn" onclick="scrollToSection('search-section')">
+                <span class="qa-icon">🔍</span>
+                <span class="qa-text"><strong>Smart Room Search</strong><small>Compatibility match engine</small></span>
+              </button>
+              <button class="qa-btn" onclick="openBookingModal(101)">
+                <span class="qa-icon">🛎️</span>
+                <span class="qa-text"><strong>New Reservation</strong><small>Instant room booking</small></span>
+              </button>
+              <button class="qa-btn" onclick="scrollToSection('bookings-section')">
+                <span class="qa-icon">📋</span>
+                <span class="qa-text"><strong>Manage Bookings</strong><small>Lookup & cancel stay</small></span>
+              </button>
+              <button class="qa-btn" onclick="scrollToSection('stats-section')">
+                <span class="qa-icon">📈</span>
+                <span class="qa-text"><strong>Hotel Analytics</strong><small>Live charts & trends</small></span>
+              </button>
+              <button class="qa-btn" onclick="scrollToSection('admin-section')">
+                <span class="qa-icon">⚙️</span>
+                <span class="qa-text"><strong>Admin Operations</strong><small>Room inventory & status</small></span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Live Room Tier Inventory Snapshot -->
+          <div class="welcome-inventory-snapshot">
+            <div class="tier-snapshot-card">
+              <div class="tsc-header">
+                <span class="tsc-tag">Standard Tier</span>
+                <span class="tsc-price">₹2,000 / night</span>
+              </div>
+              <div class="tsc-count text-info" id="wd-std-count">8 Rooms Available</div>
+              <div class="tsc-amenities">Wi-Fi • TV • AC • Floor 1 • 2 Guests</div>
+            </div>
+            <div class="tier-snapshot-card">
+              <div class="tsc-header">
+                <span class="tsc-tag text-gold">Deluxe Tier</span>
+                <span class="tsc-price text-gold">₹3,500 / night</span>
+              </div>
+              <div class="tsc-count text-gold" id="wd-del-count">8 Rooms Available</div>
+              <div class="tsc-amenities">Wi-Fi • TV • AC • Mini Bar • Floor 2 • 3 Guests</div>
+            </div>
+            <div class="tier-snapshot-card">
+              <div class="tsc-header">
+                <span class="tsc-tag text-purple">Presidential Suite</span>
+                <span class="tsc-price text-purple">₹5,000 / night</span>
+              </div>
+              <div class="tsc-count" style="color: #c084fc;" id="wd-ste-count">4 Rooms Available</div>
+              <div class="tsc-amenities">Living Area • Mini Bar • Floor 3 • 4 Guests</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Key Highlights Feature Row -->
+    <section class="highlights-section">
+      <div class="container">
+        <div class="highlights-grid">
+          <div class="highlight-card">
+            <div class="highlight-icon">🎯</div>
+            <div class="highlight-info">
+              <h3>Smart Room Matching</h3>
+              <p>Scores rooms up to 100% based on your dates, budget, and capacity.</p>
+            </div>
+          </div>
+          <div class="highlight-card">
+            <div class="highlight-icon">💎</div>
+            <div class="highlight-info">
+              <h3>Smart Pricing Rules</h3>
+              <p>Automatic 10% long-stay discounts (5+ nights) and Silver/Gold loyalty tiers.</p>
+            </div>
+          </div>
+          <div class="highlight-card">
+            <div class="highlight-icon">🛡️</div>
+            <div class="highlight-info">
+              <h3>Instant Guaranteed Booking</h3>
+              <p>Simulated UPI, Card & Cash payments with zero double-booking conflicts.</p>
+            </div>
+          </div>
+          <div class="highlight-card">
+            <div class="highlight-icon">⚡</div>
+            <div class="highlight-info">
+              <h3>Flexible Cancellation</h3>
+              <p>One-click instant reservation cancellation with full simulated refund.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Rooms Catalog Section -->
+    <section class="rooms-section" id="rooms-section">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">ACCOMMODATIONS</div>
+          <h2 class="section-title">Explore Our Rooms & Suites</h2>
+          <p class="section-desc">Choose from 20 elegantly designed rooms across three curated tiers, each with dedicated amenities and distinct charm.</p>
+        </div>
+
+        <!-- Room Filter Tabs -->
+        <div class="filter-bar" id="room-filters">
+          <button class="filter-tab active" data-filter="ALL" onclick="filterRoomCards('ALL')">All Rooms (<span id="count-all">20</span>)</button>
+          <button class="filter-tab" data-filter="Standard" onclick="filterRoomCards('Standard')">Standard (<span id="count-standard">8</span>)</button>
+          <button class="filter-tab" data-filter="Deluxe" onclick="filterRoomCards('Deluxe')">Deluxe (<span id="count-deluxe">8</span>)</button>
+          <button class="filter-tab" data-filter="Suite" onclick="filterRoomCards('Suite')">Suite (<span id="count-suite">4</span>)</button>
+          
+          <div class="filter-divider"></div>
+          
+          <div class="floor-selector">
+            <label for="floor-filter">Floor:</label>
+            <select id="floor-filter" onchange="filterRoomsByFloor(this.value)">
+              <option value="ALL">All Floors</option>
+              <option value="1">Floor 1 (Standard)</option>
+              <option value="2">Floor 2 (Deluxe)</option>
+              <option value="3">Floor 3 (Suites)</option>
+            </select>
+          </div>
+
+          <div class="status-selector">
+            <label for="status-filter">Status:</label>
+            <select id="status-filter" onchange="filterRoomsByStatus(this.value)">
+              <option value="ALL">All Status</option>
+              <option value="AVAILABLE">Available Only</option>
+              <option value="BOOKED">Booked</option>
+              <option value="MAINTENANCE">Maintenance</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Room Cards Grid -->
+        <div class="rooms-grid" id="rooms-grid">
+          <!-- Room cards rendered dynamically by JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Smart Room Search & Match Section -->
+    <section class="search-section" id="search-section">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">INTELLIGENT ALGORITHM</div>
+          <h2 class="section-title">Smart Room Search & Match</h2>
+          <p class="section-desc">Tell us your travel dates, budget, and party size. Our algorithmic engine ranks available rooms with a bespoke match score (0–100%).</p>
+        </div>
+
+        <div class="search-layout">
+          <!-- Filter Panel -->
+          <div class="search-panel-card">
+            <h3 class="panel-heading">Search Parameters</h3>
+            <form id="smart-search-form" onsubmit="executeSmartSearch(event)">
+              <div class="form-group">
+                <label for="search-checkin">Check-in Date *</label>
+                <input type="date" id="search-checkin" class="input-control" required onchange="updateSearchNights()">
+              </div>
+
+              <div class="form-group">
+                <label for="search-checkout">Check-out Date *</label>
+                <input type="date" id="search-checkout" class="input-control" required onchange="updateSearchNights()">
+              </div>
+
+              <div class="nights-badge" id="search-nights-badge">
+                <span id="search-nights-count">1</span> night(s) stay
+              </div>
+
+              <div class="form-group">
+                <label for="search-type">Preferred Room Type</label>
+                <select id="search-type" class="input-control">
+                  <option value="ALL">Any Category</option>
+                  <option value="Standard">Standard (Up to 2 guests)</option>
+                  <option value="Deluxe">Deluxe (Up to 3 guests)</option>
+                  <option value="Suite">Suite (Up to 4 guests)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="search-guests">Number of Guests</label>
+                <div class="guest-counter">
+                  <button type="button" class="counter-btn" onclick="adjustGuestCount(-1)">−</button>
+                  <span id="search-guests-val">2</span>
+                  <input type="hidden" id="search-guests" value="2">
+                  <button type="button" class="counter-btn" onclick="adjustGuestCount(1)">+</button>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="budget-header">
+                  <label for="search-budget">Max Budget per Night</label>
+                  <span class="budget-val" id="search-budget-display">₹6,000</span>
+                </div>
+                <input type="range" id="search-budget" min="1500" max="8000" step="500" value="6000" class="range-slider" oninput="updateBudgetDisplay(this.value)">
+                <div class="range-labels">
+                  <span>₹1,500</span>
+                  <span>₹5,000</span>
+                  <span>₹8,000+</span>
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-block" id="btn-run-smart-search">
+                Compute Smart Match
+              </button>
+            </form>
+          </div>
+
+          <!-- Results Panel -->
+          <div class="search-results-panel">
+            <div class="results-header">
+              <h3 class="panel-heading" id="results-count-heading">Ranked Matches</h3>
+              <span class="results-sub" id="results-subtext">Showing rooms sorted by highest compatibility score</span>
+            </div>
+
+            <div class="matched-rooms-list" id="matched-rooms-list">
+              <!-- Matched rooms dynamically rendered by app.js -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- My Bookings & Manage Section -->
+    <section class="bookings-section" id="bookings-section">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">RESERVATION MANAGEMENT</div>
+          <h2 class="section-title">Manage Your Bookings</h2>
+          <p class="section-desc">Look up your reservation details by Booking ID or guest phone number, check itemized billing, or process instant cancellations.</p>
+        </div>
+
+        <div class="booking-lookup-bar">
+          <div class="lookup-input-wrap">
+            <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="lookup-query" class="input-control" placeholder="Enter Booking ID (e.g. SS1001) or 10-digit Phone Number..." onkeyup="handleLookupKeyup(event)">
+          </div>
+          <button class="btn btn-primary" id="btn-lookup-booking" onclick="lookupBooking()">Look Up</button>
+          <button class="btn btn-outline" id="btn-view-all-bookings" onclick="showAllBookings()">View All Bookings</button>
+        </div>
+
+        <div class="bookings-display-area" id="bookings-display-area">
+          <!-- Dynamic bookings list or empty state -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Live Hotel Statistics & Analytics -->
+    <section class="stats-section" id="stats-section">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">LIVE ANALYTICS</div>
+          <h2 class="section-title">SmartStay Live Performance</h2>
+          <p class="section-desc">Real-time statistics calculated live from persistent storage data.</p>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-header">
+              <span class="stat-label">Total Rooms</span>
+              <span class="stat-icon">🏨</span>
+            </div>
+            <div class="stat-value" id="stat-total-rooms">20</div>
+            <div class="stat-footer">
+              <span class="stat-pill pill-available"><span id="stat-avail-count">20</span> Available</span>
+              <span class="stat-pill pill-booked"><span id="stat-booked-count">0</span> Booked</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <span class="stat-label">Live Occupancy</span>
+              <span class="stat-icon">📊</span>
+            </div>
+            <div class="stat-value" id="stat-occupancy-rate">0%</div>
+            <div class="progress-bar-wrap">
+              <div class="progress-bar-fill" id="stat-occupancy-bar" style="width: 0%"></div>
+            </div>
+            <div class="stat-footer muted-text">
+              <span id="stat-maintenance-count">0</span> room(s) under maintenance
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <span class="stat-label">Total Revenue</span>
+              <span class="stat-icon">₹</span>
+            </div>
+            <div class="stat-value text-gold" id="stat-total-revenue">₹0</div>
+            <div class="stat-footer">
+              From confirmed reservations
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <span class="stat-label">Reservations</span>
+              <span class="stat-icon">📋</span>
+            </div>
+            <div class="stat-value" id="stat-total-reservations">0</div>
+            <div class="stat-footer">
+              <span class="stat-pill pill-confirmed"><span id="stat-confirmed-count">0</span> Confirmed</span>
+              <span class="stat-pill pill-cancelled"><span id="stat-cancelled-count">0</span> Cancelled</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Category breakdown -->
+        <div class="stats-row-secondary">
+          <div class="chart-card">
+            <h3>Reservations by Room Category</h3>
+            <div class="bar-chart-container">
+              <div class="chart-item">
+                <div class="chart-item-label">Standard</div>
+                <div class="chart-item-track">
+                  <div class="chart-bar bar-standard" id="chart-bar-standard" style="width: 0%"></div>
+                </div>
+                <div class="chart-item-val" id="chart-val-standard">0</div>
+              </div>
+              <div class="chart-item">
+                <div class="chart-item-label">Deluxe</div>
+                <div class="chart-item-track">
+                  <div class="chart-bar bar-deluxe" id="chart-bar-deluxe" style="width: 0%"></div>
+                </div>
+                <div class="chart-item-val" id="chart-val-deluxe">0</div>
+              </div>
+              <div class="chart-item">
+                <div class="chart-item-label">Suite</div>
+                <div class="chart-item-track">
+                  <div class="chart-bar bar-suite" id="chart-bar-suite" style="width: 0%"></div>
+                </div>
+                <div class="chart-item-val" id="chart-val-suite">0</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="chart-card highlight-box">
+            <h3>Most Popular Category</h3>
+            <div class="popular-type-display" id="stat-popular-type">
+              Standard
+            </div>
+            <p class="popular-type-desc">Based on highest historical guest reservations.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Admin Panel Section -->
+    <section class="admin-section" id="admin-section">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">MANAGEMENT CONSOLE</div>
+          <h2 class="section-title">SmartStay Operations & Room Control</h2>
+          <p class="section-desc">Manage room inventory, toggle maintenance status, add new rooms, or review guest data.</p>
+        </div>
+
+        <div class="admin-grid">
+          <!-- Room Status Toggle Table -->
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <h3>Room Inventory & Status</h3>
+              <button class="btn btn-sm btn-primary" onclick="openAddRoomModal()">+ Add New Room</button>
+            </div>
+            <div class="table-responsive">
+              <table class="admin-table" id="admin-rooms-table">
+                <thead>
+                  <tr>
+                    <th>Room</th>
+                    <th>Type</th>
+                    <th>Floor</th>
+                    <th>Rate / Night</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-rooms-tbody">
+                  <!-- Populated by JavaScript -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Customer Database & Loyalty -->
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <h3>Customer Profiles & Loyalty Tiers</h3>
+              <span class="badge badge-gold" id="admin-customer-count">0 Guests</span>
+            </div>
+            <div class="table-responsive">
+              <table class="admin-table" id="admin-customers-table">
+                <thead>
+                  <tr>
+                    <th>Customer ID</th>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Loyalty Tier</th>
+                    <th>Discount</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-customers-tbody">
+                  <!-- Populated by JavaScript -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Reservation & Booking Modal -->
+  <div class="modal-backdrop" id="booking-modal" onclick="handleModalBackdropClick(event)">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-header">
+        <div>
+          <h3 class="modal-title" id="modal-title">Book Your Stay</h3>
+          <p class="modal-subtitle" id="modal-room-subtitle">Room details</p>
+        </div>
+        <button class="modal-close" onclick="closeBookingModal()">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="modal-grid">
+          <!-- Left Form Column -->
+          <div class="modal-form-col">
+            <!-- Guest Information -->
+            <div class="form-section-title">1. Guest Information</div>
+            
+            <div class="form-group">
+              <label for="book-name">Full Name *</label>
+              <input type="text" id="book-name" class="input-control" placeholder="e.g. John Doe" required>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group flex-1">
+                <label for="book-phone">Phone Number *</label>
+                <input type="tel" id="book-phone" class="input-control" placeholder="10 digits (e.g. 9876543210)" required oninput="handlePhoneLoyaltyLookup(this.value)">
+              </div>
+              <div class="form-group flex-1">
+                <label for="book-email">Email Address *</label>
+                <input type="email" id="book-email" class="input-control" placeholder="john@example.com" required>
+              </div>
+            </div>
+
+            <!-- Loyalty Status Banner -->
+            <div class="loyalty-banner" id="loyalty-banner">
+              <div class="loyalty-badge" id="loyalty-badge">REGULAR</div>
+              <div class="loyalty-text" id="loyalty-text">Enter your phone number to check SmartStay Loyalty tier discounts.</div>
+            </div>
+
+            <!-- Stay Dates -->
+            <div class="form-section-title">2. Stay Dates & Capacity</div>
+
+            <div class="form-row">
+              <div class="form-group flex-1">
+                <label for="book-checkin">Check-in Date *</label>
+                <input type="date" id="book-checkin" class="input-control" required onchange="recalculatePrice()">
+              </div>
+              <div class="form-group flex-1">
+                <label for="book-checkout">Check-out Date *</label>
+                <input type="date" id="book-checkout" class="input-control" required onchange="recalculatePrice()">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="book-guests">Number of Guests</label>
+              <select id="book-guests" class="input-control">
+                <option value="1">1 Guest</option>
+                <option value="2" selected>2 Guests</option>
+                <option value="3">3 Guests</option>
+                <option value="4">4 Guests</option>
+              </select>
+            </div>
+
+            <!-- Add-on Services -->
+            <div class="form-section-title">3. Optional Services</div>
+
+            <div class="services-list">
+              <label class="service-checkbox-card">
+                <input type="checkbox" id="srv-breakfast" onchange="recalculatePrice()">
+                <div class="service-info">
+                  <span class="service-name">Daily Gourmet Breakfast</span>
+                  <span class="service-price">₹300 / night</span>
+                </div>
+              </label>
+
+              <label class="service-checkbox-card">
+                <input type="checkbox" id="srv-pickup" onchange="recalculatePrice()">
+                <div class="service-info">
+                  <span class="service-name">Airport VIP Pickup</span>
+                  <span class="service-price">₹800 (one-time)</span>
+                </div>
+              </label>
+
+              <label class="service-checkbox-card">
+                <input type="checkbox" id="srv-bed" onchange="recalculatePrice()">
+                <div class="service-info">
+                  <span class="service-name">Extra Plush Bed</span>
+                  <span class="service-price">₹500 / night</span>
+                </div>
+              </label>
+            </div>
+
+            <!-- Payment Simulation -->
+            <div class="form-section-title">4. Simulated Payment Gateway</div>
+
+            <div class="payment-tabs">
+              <button type="button" class="payment-tab active" data-method="UPI" onclick="selectPaymentMethod('UPI')">UPI</button>
+              <button type="button" class="payment-tab" data-method="Card" onclick="selectPaymentMethod('Card')">Credit / Debit Card</button>
+              <button type="button" class="payment-tab" data-method="Cash" onclick="selectPaymentMethod('Cash')">Cash on Arrival</button>
+            </div>
+
+            <div id="payment-field-upi" class="payment-fields">
+              <label for="upi-id">UPI ID *</label>
+              <input type="text" id="upi-id" class="input-control" placeholder="e.g. yourname@okaxis or guest@upi">
+              <span class="form-hint">Enter a valid UPI virtual payment address.</span>
+            </div>
+
+            <div id="payment-field-card" class="payment-fields" style="display: none;">
+              <div class="form-group">
+                <label for="card-number">16-Digit Card Number *</label>
+                <input type="text" id="card-number" class="input-control" placeholder="4111 2222 3333 4444" maxlength="19" oninput="formatCardInput(this)">
+                <span class="form-hint">Tip: Enter card ending in <strong>0000</strong> to simulate bank decline!</span>
+              </div>
+              <div class="form-row">
+                <div class="form-group flex-1">
+                  <label for="card-exp">Expiry</label>
+                  <input type="text" id="card-exp" class="input-control" placeholder="MM/YY" maxlength="5">
+                </div>
+                <div class="form-group flex-1">
+                  <label for="card-cvv">CVV</label>
+                  <input type="password" id="card-cvv" class="input-control" placeholder="•••" maxlength="4">
+                </div>
+              </div>
+            </div>
+
+            <div id="payment-field-cash" class="payment-fields" style="display: none;">
+              <div class="cash-notice">
+                <p>💵 Pay ₹<span id="cash-amount-display">0</span> upon arrival at the hotel front desk during check-in.</p>
+              </div>
+            </div>
+
+            <div class="payment-error-alert" id="payment-error-alert" style="display: none;"></div>
+          </div>
+
+          <!-- Right Breakdown Column -->
+          <div class="modal-summary-col">
+            <div class="room-preview-box" id="modal-room-preview">
+              <img src="assets/standard.jpg" alt="Room Preview" id="preview-room-img" class="preview-img">
+              <div class="preview-details">
+                <span class="preview-badge" id="preview-room-type">Standard Room</span>
+                <h4 id="preview-room-title">Room 101</h4>
+                <div class="preview-amenities" id="preview-amenities">Wi-Fi • TV • AC</div>
+              </div>
+            </div>
+
+            <!-- Price Breakdown Box -->
+            <div class="price-breakdown-card">
+              <h4 class="breakdown-title">Pricing Summary</h4>
+
+              <div class="breakdown-line">
+                <span>Base Rate (<span id="calc-nights">1</span> nights × ₹<span id="calc-rate">2000</span>)</span>
+                <span id="calc-base-cost">₹2,000</span>
+              </div>
+
+              <div class="breakdown-line" id="line-weekend" style="display: none;">
+                <span class="line-tag tag-surcharge">Weekend Surcharge (+10% on <span id="calc-weekend-nights">0</span> nights)</span>
+                <span class="text-warning" id="calc-weekend-surcharge">+₹0</span>
+              </div>
+
+              <div class="breakdown-line" id="line-longstay" style="display: none;">
+                <span class="line-tag tag-discount">Long Stay Discount (-10% for 5+ nights)</span>
+                <span class="text-success" id="calc-longstay-discount">-₹0</span>
+              </div>
+
+              <div class="breakdown-line" id="line-loyalty" style="display: none;">
+                <span class="line-tag tag-discount">Loyalty Tier Discount (<span id="calc-loyalty-percent">0</span>%)</span>
+                <span class="text-success" id="calc-loyalty-discount">-₹0</span>
+              </div>
+
+              <div class="breakdown-line" id="line-services" style="display: none;">
+                <span>Add-on Services</span>
+                <span id="calc-services-cost">+₹0</span>
+              </div>
+
+              <div class="breakdown-divider"></div>
+
+              <div class="breakdown-total">
+                <span>Total Amount</span>
+                <span class="total-price" id="calc-grand-total">₹2,000</span>
+              </div>
+            </div>
+
+            <div class="modal-actions">
+              <button type="button" class="btn btn-primary btn-block btn-lg" id="btn-confirm-booking" onclick="executeBooking()">
+                Confirm & Pay
+              </button>
+              <button type="button" class="btn btn-ghost btn-block" onclick="closeBookingModal()">
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Booking Confirmation Digital Ticket Modal -->
+  <div class="modal-backdrop" id="ticket-modal" onclick="handleTicketBackdropClick(event)">
+    <div class="modal-dialog modal-md">
+      <div class="ticket-card" id="printable-ticket">
+        <div class="ticket-header">
+          <div class="ticket-brand">
+            <span class="ticket-star">✦</span>
+            <h3>SmartStay Luxury Hotel</h3>
+          </div>
+          <span class="ticket-badge badge-confirmed">CONFIRMED</span>
+        </div>
+
+        <div class="ticket-body">
+          <div class="ticket-success-icon">✓</div>
+          <h2 class="ticket-title">Reservation Confirmed!</h2>
+          <p class="ticket-subtitle">Your stay is locked in. Here is your digital reservation pass.</p>
+
+          <div class="ticket-meta-grid">
+            <div class="meta-item">
+              <label>Booking ID</label>
+              <strong class="text-gold" id="ticket-booking-id">SS1001</strong>
+            </div>
+            <div class="meta-item">
+              <label>Transaction ID</label>
+              <strong id="ticket-txn-id">TXN10001</strong>
+            </div>
+            <div class="meta-item">
+              <label>Guest Name</label>
+              <strong id="ticket-guest-name">John Doe</strong>
+            </div>
+            <div class="meta-item">
+              <label>Phone</label>
+              <span id="ticket-guest-phone">9876543210</span>
+            </div>
+            <div class="meta-item">
+              <label>Room Assigned</label>
+              <strong id="ticket-room">Room 101 (Standard)</strong>
+            </div>
+            <div class="meta-item">
+              <label>Dates & Nights</label>
+              <span id="ticket-dates">2026-10-10 to 2026-10-12 (2 nights)</span>
+            </div>
+            <div class="meta-item">
+              <label>Services Included</label>
+              <span id="ticket-services">None</span>
+            </div>
+            <div class="meta-item">
+              <label>Total Paid</label>
+              <strong class="text-gold" id="ticket-amount">₹4,000</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="ticket-footer">
+          <button class="btn btn-outline" onclick="window.print()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+            Print Pass
+          </button>
+          <button class="btn btn-primary" onclick="closeTicketModalAndShowBookings()">
+            View In My Bookings
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Room Modal (Admin) -->
+  <div class="modal-backdrop" id="add-room-modal" onclick="handleAddRoomBackdropClick(event)">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-header">
+        <h3 class="modal-title">Add New Hotel Room</h3>
+        <button class="modal-close" onclick="closeAddRoomModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="add-room-form" onsubmit="executeAddRoom(event)">
+          <div class="form-group">
+            <label for="new-room-type">Room Type *</label>
+            <select id="new-room-type" class="input-control" required onchange="handleNewRoomTypeChange(this.value)">
+              <option value="Standard">Standard (Floor 1, ₹2,000/night)</option>
+              <option value="Deluxe">Deluxe (Floor 2, ₹3,500/night)</option>
+              <option value="Suite">Suite (Floor 3, ₹5,000/night)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="new-room-number">Room Number *</label>
+            <input type="number" id="new-room-number" class="input-control" placeholder="e.g. 109" min="100" max="999" required>
+          </div>
+          <div class="form-group">
+            <label for="new-room-floor">Floor Number *</label>
+            <input type="number" id="new-room-floor" class="input-control" value="1" min="1" max="10" required>
+          </div>
+          <div class="modal-actions" style="margin-top: 1.5rem;">
+            <button type="submit" class="btn btn-primary btn-block">Add Room</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-brand">
+        <div class="brand-text">
+          <span class="brand-name">SmartStay</span>
+          <span class="brand-tag">HOTEL RESERVATION SYSTEM</span>
+        </div>
+        <p class="footer-bio">An intelligent hotel reservation and room management architecture built with Object-Oriented Design, dynamic pricing engines, and live persistence.</p>
+      </div>
+      <div class="footer-links">
+        <h4>System Features</h4>
+        <ul>
+          <li><a href="#rooms-section">20 Curated Rooms</a></li>
+          <li><a href="#search-section">Smart Compatibility Search</a></li>
+          <li><a href="#stats-section">Live Live Occupancy & Revenue</a></li>
+          <li><a href="#admin-section">Admin Room Controls</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Internship Details</h4>
+        <p class="footer-note">CodeAlpha Java Programming Internship – Task 4</p>
+        <p class="footer-note">Running dual-mode: Native Browser Web Client + Java 21 Backend Engine.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p>© 2026 SmartStay Hotel Reservation System. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

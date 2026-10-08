@@ -1,0 +1,1 @@
+# bookingId|customerId|room|type|checkIn|checkOut|guests|services|baseCost|weekendSurcharge|longStayDiscount|loyaltyDiscount|bookingStatus|paymentStatus
