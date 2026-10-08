@@ -216,9 +216,9 @@ Most Popular Room Type: Deluxe
 
 ## Author
 
-**Sahana**, B.Tech Computer Science and Engineering student, Sapthagiri NPS University
+**Sahana HG**, B.Tech Computer Science and Engineering student, Sapthagiri NPS University
 
-- GitHub: `https://github.com/<your-username>`
-- LinkedIn: `https://www.linkedin.com/in/<your-profile>`
+- GitHub: `https://github.com/SahanaHG/SmartStay`
+- LinkedIn: `https://www.linkedin.com/in/sahana-hg`
 
 Built as part of the CodeAlpha Java Programming Internship.
