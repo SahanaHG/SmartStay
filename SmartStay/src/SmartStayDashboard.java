@@ -1388,10 +1388,9 @@ public final class SmartStayDashboard extends JFrame {
                 "Are you sure you want to log out of " + name + " session?",
                 "Logout Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (opt == JOptionPane.YES_OPTION) {
+            LoginFrame login = new LoginFrame(hotel);
+            login.setVisible(true);
             dispose();
-            SwingUtilities.invokeLater(() -> {
-                new LoginFrame(hotel).setVisible(true);
-            });
         }
     }
 

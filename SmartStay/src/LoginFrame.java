@@ -73,13 +73,19 @@ public final class LoginFrame extends JFrame {
         root.setBackground(BG_LIGHT);
         root.setBorder(new EmptyBorder(30, 36, 30, 36));
 
-        JPanel card = new JPanel();
-        card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
+        JPanel card = new JPanel(new GridBagLayout());
         card.setBackground(CARD_BG);
         card.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(CARD_BORDER, 1),
-                new EmptyBorder(26, 26, 26, 26)
+                new EmptyBorder(24, 28, 24, 28)
         ));
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(3, 0, 3, 0);
+        gbc.weightx = 1.0;
 
         // Brand Logo
         JLabel logoSquare = new JLabel("SS", SwingConstants.CENTER) {
@@ -96,47 +102,82 @@ public final class LoginFrame extends JFrame {
         logoSquare.setForeground(Color.WHITE);
         logoSquare.setFont(new Font("Segoe UI", Font.BOLD, 18));
         logoSquare.setPreferredSize(new Dimension(44, 44));
-        logoSquare.setMaximumSize(new Dimension(44, 44));
-        logoSquare.setAlignmentX(Component.CENTER_ALIGNMENT);
+        logoSquare.setHorizontalAlignment(SwingConstants.CENTER);
 
-        JLabel lblTitle = new JLabel("SmartStay PMS");
+        JPanel logoWrapper = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        logoWrapper.setOpaque(false);
+        logoWrapper.add(logoSquare);
+        card.add(logoWrapper, gbc);
+
+        // Titles
+        gbc.gridy++;
+        JLabel lblTitle = new JLabel("SmartStay PMS", SwingConstants.CENTER);
         lblTitle.setFont(FONT_TITLE);
         lblTitle.setForeground(TEXT_MAIN);
-        lblTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
+        card.add(lblTitle, gbc);
 
-        JLabel lblSub = new JLabel("Front Desk & Staff Authentication");
+        gbc.gridy++;
+        JLabel lblSub = new JLabel("Front Desk & Staff Authentication", SwingConstants.CENTER);
         lblSub.setFont(FONT_SUBTITLE);
         lblSub.setForeground(TEXT_MUTED);
-        lblSub.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        card.add(logoSquare);
-        card.add(Box.createRigidArea(new Dimension(0, 10)));
-        card.add(lblTitle);
-        card.add(Box.createRigidArea(new Dimension(0, 4)));
-        card.add(lblSub);
-        card.add(Box.createRigidArea(new Dimension(0, 20)));
+        card.add(lblSub, gbc);
 
         // Error Banner
+        gbc.gridy++;
+        gbc.insets = new Insets(8, 0, 4, 0);
         lblError = new JLabel(" ", SwingConstants.CENTER);
         lblError.setFont(new Font("Segoe UI", Font.BOLD, 11));
         lblError.setForeground(DANGER);
-        lblError.setAlignmentX(Component.CENTER_ALIGNMENT);
-        card.add(lblError);
-        card.add(Box.createRigidArea(new Dimension(0, 8)));
+        card.add(lblError, gbc);
 
         // Fields
-        txtUsername = new JTextField("admin");
-        txtPassword = new JPasswordField("admin123");
-        comboRole = new JComboBox<>(new String[]{"Administrator (General Manager)", "Front Desk Officer", "Property Manager"});
+        gbc.insets = new Insets(2, 0, 1, 0);
+        txtUsername = new JTextField("admin", 20);
+        txtUsername.setFont(FONT_BODY);
+        txtUsername.setPreferredSize(new Dimension(280, 34));
 
-        card.add(createInputBlock("Username", txtUsername));
-        card.add(Box.createRigidArea(new Dimension(0, 10)));
-        card.add(createInputBlock("Password", txtPassword));
-        card.add(Box.createRigidArea(new Dimension(0, 10)));
-        card.add(createInputBlock("Role", comboRole));
-        card.add(Box.createRigidArea(new Dimension(0, 20)));
+        txtPassword = new JPasswordField("admin123", 20);
+        txtPassword.setFont(FONT_BODY);
+        txtPassword.setPreferredSize(new Dimension(280, 34));
+
+        comboRole = new JComboBox<>(new String[]{"Administrator (General Manager)", "Front Desk Officer", "Property Manager"});
+        comboRole.setFont(FONT_BODY);
+        comboRole.setPreferredSize(new Dimension(280, 34));
+
+        gbc.gridy++;
+        JLabel lblUser = new JLabel("Username");
+        lblUser.setFont(FONT_SUBTITLE);
+        lblUser.setForeground(TEXT_MAIN);
+        card.add(lblUser, gbc);
+
+        gbc.gridy++;
+        card.add(txtUsername, gbc);
+
+        gbc.gridy++;
+        gbc.insets = new Insets(8, 0, 1, 0);
+        JLabel lblPass = new JLabel("Password");
+        lblPass.setFont(FONT_SUBTITLE);
+        lblPass.setForeground(TEXT_MAIN);
+        card.add(lblPass, gbc);
+
+        gbc.gridy++;
+        gbc.insets = new Insets(2, 0, 1, 0);
+        card.add(txtPassword, gbc);
+
+        gbc.gridy++;
+        gbc.insets = new Insets(8, 0, 1, 0);
+        JLabel lblRole = new JLabel("Role");
+        lblRole.setFont(FONT_SUBTITLE);
+        lblRole.setForeground(TEXT_MAIN);
+        card.add(lblRole, gbc);
+
+        gbc.gridy++;
+        gbc.insets = new Insets(2, 0, 1, 0);
+        card.add(comboRole, gbc);
 
         // Sign In Button
+        gbc.gridy++;
+        gbc.insets = new Insets(16, 0, 8, 0);
         JButton btnLogin = new JButton("Sign In →") {
             @Override
             protected void paintComponent(Graphics g) {
@@ -153,40 +194,23 @@ public final class LoginFrame extends JFrame {
         btnLogin.setFocusPainted(false);
         btnLogin.setBorderPainted(false);
         btnLogin.setContentAreaFilled(false);
-        btnLogin.setMaximumSize(new Dimension(Integer.MAX_VALUE, 38));
         btnLogin.setPreferredSize(new Dimension(280, 38));
         btnLogin.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        btnLogin.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         btnLogin.addActionListener(e -> attemptLogin());
         txtPassword.addActionListener(e -> attemptLogin());
         txtUsername.addActionListener(e -> attemptLogin());
-
-        card.add(btnLogin);
-        card.add(Box.createRigidArea(new Dimension(0, 16)));
+        card.add(btnLogin, gbc);
 
         // Demo Hint
-        JLabel lblHint = new JLabel("<html><center><font color='#64748B'>Default Demo Login:<br>Username: <b>admin</b> &nbsp;|&nbsp; Password: <b>admin123</b></font></center></html>");
+        gbc.gridy++;
+        gbc.insets = new Insets(8, 0, 0, 0);
+        JLabel lblHint = new JLabel("<html><center><font color='#64748B'>Default Demo Login:<br>Username: <b>admin</b> &nbsp;|&nbsp; Password: <b>admin123</b></font></center></html>", SwingConstants.CENTER);
         lblHint.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-        lblHint.setAlignmentX(Component.CENTER_ALIGNMENT);
-        card.add(lblHint);
+        card.add(lblHint, gbc);
 
         root.add(card, BorderLayout.CENTER);
         setContentPane(root);
-    }
-
-    private JPanel createInputBlock(String labelText, JComponent input) {
-        JPanel p = new JPanel(new BorderLayout(0, 4));
-        p.setOpaque(false);
-        p.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50));
-
-        JLabel l = new JLabel(labelText);
-        l.setFont(FONT_SUBTITLE);
-        l.setForeground(TEXT_MAIN);
-
-        p.add(l, BorderLayout.NORTH);
-        p.add(input, BorderLayout.CENTER);
-        return p;
     }
 
     private void attemptLogin() {

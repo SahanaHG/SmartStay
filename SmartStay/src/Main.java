@@ -40,19 +40,18 @@ public class Main {
             ConsoleUI consoleUI = new ConsoleUI(hotelManager);
             consoleUI.start();
         } else {
-            System.out.println("  * Launching         : Welcome Splash Intro & Front Desk Login");
+            System.out.println("  * Launching         : SmartStay Executive PMS Dashboard");
             System.out.println("  * Tip               : Pass '--console' for Terminal Menu");
             System.out.println("=================================================\n");
 
-            try {
-                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            } catch (Exception ignored) {
-            }
+            SwingUtilities.invokeLater(() -> {
+                try {
+                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                } catch (Exception ignored) {
+                }
 
-            // 1. Welcome Splash Screen -> 2. Login Portal -> 3. Executive Dashboard
-            WelcomeSplash.showAndProceed(() -> {
-                LoginFrame login = new LoginFrame(hotelManager);
-                login.setVisible(true);
+                SmartStayDashboard dashboard = new SmartStayDashboard(hotelManager);
+                dashboard.setVisible(true);
             });
         }
     }
