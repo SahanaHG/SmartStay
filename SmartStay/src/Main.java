@@ -40,7 +40,7 @@ public class Main {
             ConsoleUI consoleUI = new ConsoleUI(hotelManager);
             consoleUI.start();
         } else {
-            System.out.println("  * Launching         : SmartStay Executive PMS Dashboard");
+            System.out.println("  * Launching         : Front Welcome Dashboard & Staff Login");
             System.out.println("  * Tip               : Pass '--console' for Terminal Menu");
             System.out.println("=================================================\n");
 
@@ -50,8 +50,9 @@ public class Main {
                 } catch (Exception ignored) {
                 }
 
-                SmartStayDashboard dashboard = new SmartStayDashboard(hotelManager);
-                dashboard.setVisible(true);
+                // 1. Welcome Page -> 2. Staff Login Portal -> 3. Executive PMS Dashboard
+                WelcomeSplash welcome = new WelcomeSplash(hotelManager);
+                welcome.setVisible(true);
             });
         }
     }
