@@ -37,7 +37,11 @@ public class FileManager {
     private final List<String> loadWarnings = new ArrayList<>();
 
     public FileManager(String dataDirectory) {
-        this.dataDirectory = Paths.get(dataDirectory);
+        Path path = Paths.get(dataDirectory);
+        if (!Files.exists(path) && Files.exists(Paths.get("SmartStay", dataDirectory))) {
+            path = Paths.get("SmartStay", dataDirectory);
+        }
+        this.dataDirectory = path;
     }
 
     public List<String> getLoadWarnings() {

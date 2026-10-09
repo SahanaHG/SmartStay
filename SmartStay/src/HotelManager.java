@@ -13,7 +13,7 @@ import java.util.TreeMap;
  * It never prints anything (that is ConsoleUI's job) and never touches files directly
  * (that is FileManager's job).
  */
-public class HotelManager {
+public final class HotelManager {
 
     private static final int MAX_NIGHTS = 30;
     private static final int FIRST_CUSTOMER_NUMBER = 1001;
@@ -76,7 +76,16 @@ public class HotelManager {
         return startupMessages;
     }
 
-    private void saveAll() {
+    public void reloadAll() {
+        rooms.clear();
+        customers.clear();
+        reservations.clear();
+        payments.clear();
+        startupMessages.clear();
+        loadData();
+    }
+
+    public void saveAll() {
         fileManager.saveRooms(rooms.values());
         fileManager.saveCustomers(customers);
         fileManager.saveReservations(reservations);
@@ -367,6 +376,10 @@ public class HotelManager {
 
     public List<Reservation> getAllReservations() {
         return Collections.unmodifiableList(reservations);
+    }
+
+    public List<Customer> getAllCustomers() {
+        return Collections.unmodifiableList(customers);
     }
 
     public List<Payment> getAllPayments() {

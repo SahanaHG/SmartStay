@@ -1,0 +1,13 @@
+# Compiled output
+out/
+bin/
+SmartStay/bin/
+*.class
+
+# IDE files
+.idea/
+*.iml
+
+# OS files
+.DS_Store
+Thumbs.db

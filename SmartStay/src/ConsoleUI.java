@@ -1,7 +1,6 @@
+import java.io.UncheckedIOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.io.UncheckedIOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -691,13 +690,22 @@ public class ConsoleUI {
     }
 
     private LocalDate readDate(String prompt) {
+        String[] patterns = {
+                "d-M-yyyy", "d/M/yyyy", "d.M.yyyy",
+                "yyyy-M-d", "yyyy/M/d", "yyyy.M.d", "yyyy-MM-dd"
+        };
         while (true) {
-            String text = readLine(prompt);
-            try {
-                return LocalDate.parse(text);
-            } catch (DateTimeParseException e) {
-                printError("Invalid date. Use the format yyyy-MM-dd (example: " + LocalDate.now().plusDays(7) + ").");
+            String text = readLine(prompt).trim();
+            for (String p : patterns) {
+                try {
+                    return LocalDate.parse(text, DateTimeFormatter.ofPattern(p));
+                } catch (Exception ignored) {}
             }
+            try {
+                return LocalDate.parse(text, DateTimeFormatter.ISO_LOCAL_DATE);
+            } catch (Exception ignored) {}
+            printError("Invalid date format. Use DD-MM-YYYY or YYYY-MM-DD (example: "
+                    + LocalDate.now().plusDays(7).format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + ").");
         }
     }
 
