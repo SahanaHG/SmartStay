@@ -202,13 +202,9 @@ public final class LoginFrame extends JFrame {
         if (expectedPassword != null && expectedPassword.equals(password)) {
             lblError.setText(" ");
             AuthUser user = USERS.get(username.toLowerCase());
+            SmartStayDashboard dashboard = new SmartStayDashboard(hotel, user);
+            dashboard.setVisible(true);
             dispose();
-
-            // Open Dashboard with logged-in user
-            SwingUtilities.invokeLater(() -> {
-                SmartStayDashboard dashboard = new SmartStayDashboard(hotel, user);
-                dashboard.setVisible(true);
-            });
         } else {
             lblError.setText("Invalid credentials. Try admin / admin123");
             txtPassword.setText("");

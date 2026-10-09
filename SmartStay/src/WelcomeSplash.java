@@ -118,12 +118,17 @@ public final class WelcomeSplash extends JWindow {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                dispose();
-                onFinish.run();
+                try {
+                    if (onFinish != null) {
+                        onFinish.run();
+                    }
+                } finally {
+                    dispose();
+                }
             }
         });
 
-        // Animated Loader Timer (~1.5 seconds)
+        // Animated Loader Timer (~1.2 seconds)
         Timer timer = new Timer(15, null);
         final int[] progress = {0};
         timer.addActionListener(e -> {
@@ -142,8 +147,13 @@ public final class WelcomeSplash extends JWindow {
 
             if (progress[0] >= 100) {
                 timer.stop();
-                dispose();
-                SwingUtilities.invokeLater(onFinish);
+                try {
+                    if (onFinish != null) {
+                        onFinish.run();
+                    }
+                } finally {
+                    dispose();
+                }
             }
         });
         timer.start();
